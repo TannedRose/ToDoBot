@@ -75,46 +75,19 @@ BOT_TOKEN=
 API_URL=
 ```
 
-<details><summary>Local launch: Django/PostgreSQL</summary><br>
-
-***!!! It is assumed that the user has installed [PostgreSQL](https://www.postgresql.org/) and [poetry](https://python-poetry.org/) !!!***
-
-
-1.2* Create a new PostgreSQL database and pass the credentials to the [.env] file.
-
-2. All required dependencies described in **requirements.txt** file. To install all required libraries and packages, run the command:
-```bash
-poetry install
-```
-
-3. To activate the virtual environment:
-```bash
-poetry shell
-```
-
-4. Run the migrations and launch the application:
-```bash
-python tree_menu/manage.py makemigrations && \
-python tree_menu/manage.py migrate && \
-python tree_menu/manage.py runserver
-```
-The project will run locally at `http://127.0.0.1:8000/`
-
-</details>
 
 <details><summary>Lounch via Docker: Docker Compose</summary>
 
 2. From the root directory of the project, execute the command:
 ```bash
-docker-compose -f docker-compose.dev.yml up -d --build
+docker-compose -f docker-compose up -d --build
 ```
-The project will be hosted in two docker containers (db, app) at `http://localhost:8000/`.
 
 3. You can stop docker and delete containers with the command from the root directory of the project:
 ```bash
-docker-compose -f docker-compose.dev.yml down
+docker-compose -f docker-compose down
 ```
-add flag -v to delete volumes ```docker-compose -f docker-compose.dev.yml down -v```
+add flag -v to delete volumes ```docker-compose -f docker-compose down -v```
 </details><h1></h1>
 
 [⬆️Contents](#contents)
