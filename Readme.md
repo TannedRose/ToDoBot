@@ -27,7 +27,7 @@ ___
 
 [![Django](https://img.shields.io/badge/-Django-464646?logo=Django)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?logo=Django)](https://www.django-rest-framework.org/)
-[![Aiogram]()](https://aiogram.dev/)
+[![Aiogram](https://img.shields.io/badge/-Aiogram-464646?logo=telegram)](https://aiogram.dev/)
 
 **Databases:**
 
