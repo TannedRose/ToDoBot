@@ -4,7 +4,8 @@
 <kbd>
 </kbd>
 </p>
-TODOBOT it is a simple Telegram bot for tracking your tasks 
+TODOBOT it is a simple Telegram bot for tracking your tasks
+
 ___
 
 
@@ -19,7 +20,7 @@ ___
 
 **Programming languages and modules:**
 
-[![Python](https://img.shields.io/badge/-python_3.10^-464646?logo=python)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/-python_3.11^-464646?logo=python)](https://www.python.org/)
 
 
 **Frameworks:**
