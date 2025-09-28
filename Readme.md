@@ -2,7 +2,6 @@
 
 <p style="text-align: center;">
 <kbd>
-<image src="src/staticfiles/LogoSVG.svg" alt='logo' width='150'/>
 </kbd>
 </p>
 TODOBOT it is a simple Telegram bot for tracking your tasks 
