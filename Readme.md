@@ -10,8 +10,6 @@ ___
 
 
 ## Contents:
-
-- [Technologies](#technologies)
 - [Description](#description)
 - [Installation and starting](#installation-and-starting)
 
