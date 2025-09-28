@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: todo
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - .env.example
+    ports:
+      - "8000:8000"
+    restart: always
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - .env.example
+    command: python bot/main.py
+    depends_on:
+      - backend
+    restart: always
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - .env.example
+    command: >
+      sh -c "sleep 10 && celery -A app.celery_app worker -l info"
+    depends_on:
+      - backend
+      - redis
+      - rabbitmq
+    restart: always
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - .env.example
+    command: >
+      sh -c "sleep 10 && celery -A app.celery_app beat -l info"
+    depends_on:
+      - backend
+      - redis
+      - rabbitmq
+    restart: always
+
+volumes:
+  postgres_data:
