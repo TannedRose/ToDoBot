@@ -10,7 +10,7 @@ from django.dispatch import receiver
 
 from .tasks import send_task_reminder
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def generate_pk():
@@ -45,22 +45,29 @@ class Task(models.Model):
 
 def delayed_schedule_reminder(instance):
     try:
+        TIME_ZONE = "America/Adak"
+        local_tz = pytz.timezone(TIME_ZONE)
+
         if isinstance(instance.due_date, str):
-            # due_str = instance.due_date.replace('Z', '+00:00')
-            # due = datetime.fromisoformat(due_str)
-            due = instance.due_date
+            due_str = instance.due_date
+            due = datetime.fromisoformat(due_str)
         else:
             due = instance.due_date
 
         if due.tzinfo is None:
-            due = pytz.utc.localize(due)
+            due = local_tz.localize(due)
+        else:
+            due = due.astimezone(local_tz)
 
-        now = datetime.now(pytz.utc)
+        now = datetime.now(local_tz)
+
+        delay = max((due - now).total_seconds(), 0)
 
         send_task_reminder.apply_async(
-            args=[instance.user.id, instance.title, instance.due_date.isoformat()],
-            countdown=5
+            args=[instance.user.id, instance.title, due.isoformat()],
+            countdown=delay
         )
+
     except Exception as e:
         print(f"❌ Ошибка планирования задачи: {e}")
         print(e.args)
@@ -70,3 +77,4 @@ def delayed_schedule_reminder(instance):
 def schedule_task_reminder(sender, instance, created, **kwargs):
     if created:
         threading.Thread(target=delayed_schedule_reminder, args=(instance,), daemon=True).start()
+
