@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 def send_task_reminder(user_id: int, title: str, due_date: str):
     try:
         message = f"🔔 Напоминание: «{title}»"
-        # message = (f"🔔 Напоминание: задача «{title}» должна быть выполнена до"
-        #            f" {str(due_date)[:-6].replace('T', ' ')}")
 
         url = f"https://api.telegram.org/bot{settings.BOT_TOKEN}/sendMessage"
         payload = {
